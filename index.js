@@ -1,13 +1,37 @@
-var https = require('https');
-var fs = require('fs');
+var express = require("express");
+const path = require("path");
+const https = require('https');
+const fs = require('fs');
+const settings = require("./settings.json");
 
-var options = {
-  key: fs.readFileSync("/etc/letsencrypt/live/www.lakebarrier.se/privkey.pem"),
-  cert: fs.readFileSync('/etc/letsencrypt/live/www.lakebarrier.se/cert.pem'),
-  ca: fs.readFileSync('/etc/letsencrypt/live/www.lakebarrier.se/chain.pem')
-};
+//Creating Express App
+var app = express();
 
-https.createServer(options, function (req, res) {
-  res.writeHead(200);
-  res.end("hello world\n");
-}).listen(8000);
+//SSL Certificate and enable if settings.online = true
+var options;
+if(settings.online){
+    options = {
+      key: fs.readFileSync(settings.pathToCertKey),
+      cert: fs.readFileSync(settings.pathToCertCert),
+      ca: fs.readFileSync(settings.pathToCertChain)
+    };
+}
+
+
+//Enable Static files
+app.use(express.static(path.join(__dirname)));
+
+//routes
+app.use('/', function(req, res){
+    res.end("<button>Click Me if you dare!!! </button>\n");
+});
+
+//Starting Server
+if(settings.online){
+    console.log("HTTPS Started with port: " + settings.port);
+    https.createServer(options, app).listen(settings.port);
+}
+else{
+    console.log("HTTP Started with port: " + settings.port);
+    app.listen(settings.port);
+}
