@@ -3,11 +3,22 @@ const path = require("path");
 const https = require('https');
 const fs = require('fs');
 const settings = require("./settings.json");
+var cors = require('cors')
+var bodyParser = require("body-parser");
+
 
 const login = require("./login");
 
 //Creating Express App
 var app = express();
+
+//Enable cors
+app.use(cors());
+
+//enable body-parser to Express
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 //SSL Certificate and enable if settings.online = true
 var options;

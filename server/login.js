@@ -6,8 +6,6 @@ const axios = require('axios');
 
 var settings = require("./settings.json");
 
-
-
 router.post("/login", function (req,res) {
     console.log(req);
     res.write("Login Attempt Success");
