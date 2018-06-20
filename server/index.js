@@ -5,7 +5,7 @@ const fs = require('fs');
 const settings = require("./settings.json");
 var cors = require('cors')
 var bodyParser = require("body-parser");
-
+var sha256 = require("sha256");
 
 const login = require("./login");
 
@@ -49,6 +49,7 @@ fs.readFile('./index.html', function (err, html) {
 app.get('/', (req, res) => res.send(htmlCodeLogin));
 app.post("/", function(req,res){
     console.log(req.body);
+    login.loginAttempt(req.body.username, req.body.password);
 
 });
 
