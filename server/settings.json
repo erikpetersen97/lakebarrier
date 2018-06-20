@@ -3,7 +3,7 @@
     "port": 1337,
     "debug": "false",
     "dbLocation": "",
-    "onlineWebAddress": "https://lakebarrier.com",
+    "onlineWebAddress": "https://lakebarrier.se",
     "offlineWebAddress": "http://localhost",
     "pathToCertKey": "/etc/letsencrypt/live/www.lakebarrier.se/privkey.pem",
     "pathToCertCert": "/etc/letsencrypt/live/www.lakebarrier.se/cert.pem",

@@ -16,8 +16,8 @@ var app = express();
 app.use(cors());
 
 //enable body-parser to Express
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
+
 
 
 //SSL Certificate and enable if settings.online = true
@@ -34,8 +34,25 @@ if(settings.online){
 //Enable Static files
 app.use(express.static(path.join(__dirname)));
 
+
+
+
+var htmlCodeLogin = "";
+fs.readFile('./index.html', function (err, html) {
+    if (err) {
+        throw err;
+    }
+    htmlCodeLogin = html;
+});
+
 //routes
-app.use('/login', login);
+app.get('/', (req, res) => res.send(htmlCodeLogin));
+app.post("/", function(req,res){
+    console.log(req.body);
+
+});
+
+
 
 //Starting Server
 if(settings.online){
